@@ -6,37 +6,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Route Finder</title>
     <style>
+        /* Global Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
+            color: #333; /* Default text color */
         }
 
+        /* Header Styles */
+        header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.2em;
+            margin-top: 5px;
+        }
+
+        /* Main Container Styles */
         .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-    
-    color: #fff;
-}
-
-
-
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
         }
 
-        p {
-            color: #666;
-            margin-bottom: 30px;
+        /* Tabs Styles */
+        .tabs {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
+        .tab {
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .tab:hover {
+            background-color: #004080;
+        }
+
+        /* Option Styles */
         .options {
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             flex-wrap: wrap;
             margin-top: 30px;
         }
@@ -44,10 +73,11 @@
         .option {
             width: 200px;
             padding: 20px;
+            margin: 10px;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .option:hover {
@@ -56,7 +86,7 @@
         }
 
         .option h2 {
-            color: #333;
+            color: #007bff;
         }
 
         .option p {
@@ -78,26 +108,7 @@
             background-color: #0056b3;
         }
 
-        .tabs {
-            margin-top: 20px;
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .tab:hover {
-            background-color: #0056b3;
-        }
-
+        /* Footer Styles */
         .footer {
             background-color: #333;
             color: #fff;
@@ -106,40 +117,39 @@
         }
 
         .footer__container {
-            display: grid;
-            grid-template-columns: 2fr repeat(2, 1fr);
+            display: flex;
+            justify-content: center;
             gap: 5rem;
-            min-width: 200px; /* Set minimum width */
             margin-top: 20px;
         }
 
-        .footer__col h3 {
-            font-size: 1.5rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
+        .footer__col {
+            flex: 1;
+            text-align: left;
         }
 
+        .footer__col h3,
         .footer__col h4 {
-            font-size: 1.2rem;
+            color: #fff;
             font-weight: 500;
             margin-bottom: 1rem;
         }
 
         .footer__col p {
+            color: #ccc;
             margin-bottom: 1rem;
             cursor: pointer;
-            transition: 0.3s;
+            transition: color 0.3s;
         }
 
         .footer__col p:hover {
-            color: #ccc;
+            color: #999;
         }
 
         .footer__bar {
-            padding: 0.5rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             gap: 1rem;
             border-top: 1px solid #666;
             margin-top: 20px;
@@ -157,59 +167,57 @@
 
         .socials span {
             font-size: 1.2rem;
-        }
-
-        @media (max-width: 900px) {
-            .footer__container {
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .footer__col {
-                text-align: center;
-            }
-        }
-
-        header {
-            background-color: #6faef294;
             color: #fff;
-            padding: 5px;
-            text-align: center;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
+        body.dark-theme {
+    background-color: #f5f6ea;
+    color: #e55010;
+}
 
-        header p {
-            font-size: 1.2em;
-            margin-top: 5px;
-        }
+.toggle-btn {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
     </style>
 </head>
 
-<body>
+<body ng-app="routeFinderApp" ng-controller="MainController">
+
+
     <header>
-        <div class="container">
+        <div >
             <h1>Route Finder</h1>
             <p>Your one-stop solution for finding routes via flight, train, bus, and car</p>
         </div>
+        <button class="toggle-btn" ng-click="toggleDarkMode()">Toggle Dark Mode</button>
     </header>
+    
 
     <div class="container">
         <div class="background-image">
             <img src="https://img.freepik.com/premium-photo/blue-location-pin-sign-icon-gps-navigation-map-road-direction-internet-search-bar-technology-symbol-position-place-background-with-find-route-mark-travel-destination-navigator-3d-rendering_79161-1996.jpg" alt="Background Image">
         </div>
-                <div class="tabs">
+        <div class="tabs">
             <a href="about.html" class="tab">About</a>
             <a href="contact.html" class="tab">Contact</a>
         </div>
-        <h1>Find Your Route</h1><br>
+        <h1>Find Your Route</h1>
         <p>Welcome to Route Finder, your one-stop solution for finding routes via flight, train, bus, and car.</p>
         <div class="options">
-          
             <div class="option">
                 <h2>Flight</h2>
                 <p>Find routes via flights</p>
@@ -233,7 +241,8 @@
         </div>
     </div>
 
-    <bR><br><br><br>
+    <br><br><br>
+
     <footer class="footer">
         <div class="footer__container">
             <div class="footer__col">
@@ -242,8 +251,7 @@
                     AK-47
                 </p>
                 <p>
-                    From friendly smiles to state-of-the-art aircraft, we connect the
-                    world, ensuring safe, comfortable, and unforgettable experiences.
+                    From friendly smiles to state-of-the-art aircraft, we connect the world, ensuring safe, comfortable, and unforgettable experiences.
                 </p>
             </div>
             <div class="footer__col">
@@ -262,9 +270,37 @@
             </div>
         </div>
         <div class="footer__bar">
-            <p>Copyright © 2023</p>
+            <p>&copy; 2023 Route Finder</p>
             <div class="socials">
                 <span><i class="ri-facebook-fill"></i></span>
                 <span><i class="ri-twitter-fill"></i></span>
                 <span><i class="ri-instagram-line"></i></span>
-               
+            </div>
+        </div>
+    </footer>
+
+    <!-- AngularJS Library and Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        var app = angular.module('routeFinderApp', []);
+
+        app.controller('MainController', function($scope) {
+            $scope.isDarkMode = false;
+
+            $scope.toggleDarkMode = function() {
+                $scope.isDarkMode = !$scope.isDarkMode;
+                updateTheme();
+            };
+
+            function updateTheme() {
+                if ($scope.isDarkMode) {
+                    document.body.classList.add('dark-theme');
+                } else {
+                    document.body.classList.remove('dark-theme');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
