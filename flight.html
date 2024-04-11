@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEROROUTE - Find Airplane Routes</title>
+    <style>
+        /* Reset some default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* This ensures that the footer stays at the bottom */
+        }
+
+        header {
+            background-color: #0079c1;
+            color: #fff;
+            padding: 20px;
+            background-repeat: no-repeat; /* Prevent background image from repeating */
+            background-image: url('/build/assets/menu-dropdown-chevron-9efa13fa.svg'); /* Background image */
+            background-position: 90% 51%; /* Position the background image */
+            padding-right: 22px; /* Add padding to the right to make space for the background image */
+        }
+
+        header h1 {
+            font-size: 32px;
+        }
+
+        nav ul {
+            list-style: none;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+            flex: 1; /* This allows the container to grow and push the footer to the bottom */
+        }
+
+        .search-section {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .search-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .search-section input[type="text"],
+        .search-section input[type="date"],
+        .search-section button {
+            padding: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .search-section button {
+            background-color: #0079c1;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #0079c1;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AEROROUTE</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Hotel</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section class="search-section">
+            <h2>Find Your Route</h2>
+            <form action="#" method="GET">
+                <input type="text" name="origin" placeholder="Origin" required>
+                <input type="text" name="destination" placeholder="Destination" required>
+                <input type="date" name="date" required>
+                <button type="submit">Search</button>
+            </form>
+        </section>
+
+        <section class="results-section">
+            <!-- Results will be displayed here -->
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 AEROROUTE. All rights reserved.</p>
+    </footer>
+</body>
+</html>
