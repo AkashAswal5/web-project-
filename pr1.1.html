@@ -44,6 +44,22 @@
             font-size: 1em;
         }
 
+        .auth-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .login-btn,
+        .signup-btn {
+            background-color: transparent;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            text-decoration: underline;
+            margin-right: 20px;
+        }
+
         /* Main Container Styles */
         .container {
             max-width: 1200px;
@@ -195,7 +211,11 @@
             <h1>Route Finder</h1>
             <p>Your one-stop solution for finding routes via flight, train, bus, and car</p>
         </div>
-        <button class="toggle-btn" ng-click="toggleDarkMode()">🌙</button> <!-- Moon symbol for dark mode toggle -->
+        <div class="auth-buttons">
+            <button class="toggle-btn" ng-click="toggleDarkMode()">🌙</button> <!-- Moon symbol for dark mode toggle -->
+            <button class="login-btn" onclick="location.href='afterlogin.html';">Login</button>
+            <button class="signup-btn" onclick="location.href='signup.html';">Sign Up</button>
+        </div>
     </header>
 
     <div class="container">
