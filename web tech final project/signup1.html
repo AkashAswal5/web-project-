@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Signup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 3em;
+            display: none; /* Initially hide the result div */
+        }
+
+        .animated {
+            animation-duration: 1s;
+            animation-fill-mode: both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fadeIn {
+            animation-name: fadeIn;
+        }
+
+        /* Eye icon styles */
+        .eye {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #666;
+        }
+
+        .eye-icon {
+            transition: color 0.3s;
+        }
+    </style>
+</head>
+
+<body ng-app="signupApp" ng-controller="SignupController">
+
+    <div class="container">
+        <h1>User Signup</h1>
+        <form id="signupForm" name="signupForm" ng-submit="signup()" novalidate>
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" ng-model="user.name" required>
+
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" ng-model="user.dob" required>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" ng-model="user.address" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" ng-model="user.phone" required>
+
+            <label for="email">Email (Gmail Account):</label>
+            <input type="email" id="email" name="email" ng-model="user.email" required>
+
+            <label for="password">Password:</label>
+            <div style="position: relative;">
+                <input type="{{ isPasswordVisible ? 'text' : 'password' }}" id="password" name="password" ng-model="user.password" required>
+                <!-- Toggle visibility icon -->
+                <span class="eye" ng-click="togglePasswordVisibility()">
+                    <!-- Use Font Awesome icons for open and closed eye -->
+                    <i class="fas fa-eye eye-icon" ng-class="{ 'fa-eye-slash': !isPasswordVisible }"></i>
+                </span>
+            </div>
+
+            <button type="submit" ng-disabled="signupForm.$invalid">Signup</button>
+        </form>
+
+        <div id="result" ng-show="signupCompleted" class="animated fadeIn">
+            <!-- Display the result with animated symbols -->
+            <span>{{ symbolToShow }}</span>
+        </div>
+    </div>
+
+    <!-- AngularJS Library and Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        var app = angular.module('signupApp', []);
+
+        app.controller('SignupController', function($scope, $timeout, $window) {
+            $scope.user = {};
+            $scope.signupCompleted = false;
+            $scope.symbolToShow = ''; // Initialize symbol to empty string
+            $scope.isPasswordVisible = false; // Password visibility flag
+
+            $scope.togglePasswordVisibility = function() {
+                // Toggle password visibility
+                $scope.isPasswordVisible = !$scope.isPasswordVisible;
+            };
+
+            $scope.signup = function() {
+                // Check if all required fields are filled
+                if ($scope.signupForm.$invalid) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+
+                // Simulate signup completion and set symbols sequentially after a delay
+                $scope.signupCompleted = true;
+                showNextSymbol('🚗', 1000); // Car symbol after 1 second
+                showNextSymbol('🚌', 2000); // Bus symbol after 2 seconds
+                showNextSymbol('🚂', 3000); // Train symbol after 3 seconds
+                showNextSymbol('✈️', 4000); // Airplane symbol after 4 seconds
+
+                // Show result message after a delay
+                $timeout(function() {
+                    document.getElementById('result').style.display = 'block';
+                }, 4500); // Show result after 4.5 seconds
+
+                // Redirect to main page after displaying all symbols
+                $timeout(function() {
+                    // Redirect to main page after 5 seconds
+                    $window.location.href = 'pe2.1.html';
+                }, 5000); // Redirect after 5 seconds
+            };
+
+            function showNextSymbol(symbol, delay) {
+                $timeout(function() {
+                    $scope.symbolToShow += symbol;
+                }, delay);
+            }
+        });
+    </script>
+</body>
+
+</html>

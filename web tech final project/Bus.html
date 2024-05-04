@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WarpWaveBus</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&amp;display=swap">
+    <style>
+        body {
+            box-sizing: inherit;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            align-items: center;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            font-family: 'Roboto', sans-serif;
+            font-style: normal;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            font-size: 15px;
+            background: #eee;
+            text-align: center;
+            color: #333;
+        }
+
+        header {
+            width: 100%;
+            background-color: black;
+            color: white;
+            padding: 1em;
+            text-align: center;
+            font-size: 1.5em;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header nav {
+            display: flex;
+            align-items: center;
+        }
+
+        header nav span {
+            display: flex;
+            align-items: center;
+        }
+
+        header nav span a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px; /* Adjust font size for links */
+            margin-right: 20px; /* Add spacing between links */
+        }
+
+        header select {
+            background-color: black; /* Match header background color */
+            color: white; /* Match header text color */
+            padding: 0.5em;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .container-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            margin-top: 80px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YnVzfGVufDB8fDB8fHww') center/cover no-repeat;
+            z-index: -1;
+        }
+
+        .form-container {
+            text-align: left;
+            padding: 20px;
+            border-radius: 20px;
+            width: 50%;
+            max-height: 70vh;
+            overflow-y: auto;
+            background-color: rgba(238, 238, 238, 0.9);
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-group label {
+            flex: 1;
+            margin-bottom: 5px;
+            font-weight: 500;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .form-group select {
+            flex: 2;
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #3f51b5;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background-color: #fff;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        #swapBtn {
+            background-color: #2196F3;
+        }
+
+        #box {
+            font-size: 1.2em;
+            border: 2px solid #3f51b5;
+            padding: 10px;
+            margin: 20px 0;
+            color: #3f51b5;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            padding: 10px 0;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+
+<body ng-app="WarpWaveBusApp">
+    <header>
+        <nav>
+            <span>
+                <a href="pe2.1.html">Home</a>
+                <a href="#">Help</a>
+                <a href="about1.html">About</a>
+            </span>
+            <select onchange="location = this.value;">
+                <option value="#">More</option>
+                <option value="car.html">Car</option>
+                <option value="train.html">Train</option>
+                <option value="flight2.html">Plane</option>
+            </select>
+        </nav>
+        WarpWaveBus
+        <span></span>
+    </header>
+    <div class="container-wrapper" ng-controller="RoutePlannerController">
+        <div class="background-image"></div>
+        <div class="form-container">
+            <form ng-submit="planRoute()">
+                <div class="form-group">
+                    <label for="startPoint">FROM :</label>
+                    <input type="text" ng-model="startPoint" placeholder="Enter starting point" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="endPoint">TO:</label>
+                    <input type="text" ng-model="endPoint" placeholder="Enter ending point" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" ng-model="date" required>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn">Plan Route</button>
+                    <button type="button" class="btn" id="swapBtn" ng-click="swapInputs()">Swap</button>
+                </div>
+            </form>
+        </div>
+
+        <footer>
+            <p>"WarpWaveBus: Your Pathway to Seamless Travel!"</p>
+        </footer>
+
+        <footer>
+            <p>&copy; 2024 WarpWaveBus. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script>
+        angular.module('WarpWaveBusApp', [])
+            .controller('RoutePlannerController', function($scope) {
+                $scope.planRoute = function() {
+                    // Implement route planning logic here
+                    console.log('Planning route:', $scope.startPoint, 'to', $scope.endPoint, 'on', $scope.date);
+                    // You can perform additional actions like making HTTP requests here
+                    // For demo, alert the planned route
+                    alert('Planned route from ' + $scope.startPoint + ' to ' + $scope.endPoint + ' on ' + $scope.date);
+                };
+
+                $scope.swapInputs = function() {
+                    // Swap inputs (two-way binding will automatically update the UI)
+                    var tempValue = $scope.startPoint;
+                    $scope.startPoint = $scope.endPoint;
+                    $scope.endPoint = tempValue;
+                };
+            });
+    </script>
+</body>
+
+</html>

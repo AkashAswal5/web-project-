@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROADx - Car Route Finder</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('https://imgs.search.brave.com/1Cer3hY5bxqexNFiaYHIFj5TZbzZPdG_MehGQrDm_ak/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9s/dXh1cmlvdXMtY2Fy/LXBhcmtlZC1oaWdo/d2F5LXdpdGgtaWxs/dW1pbmF0ZWQtaGVh/ZGxpZ2h0LXN1bnNl/dF8xODE2MjQtNjA2/MDcuanBnP3NpemU9/NjI2JmV4dD1qcGc');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+  }
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+  }
+  h1 {
+    text-align: center;
+  } 
+  form {
+    margin-top: 20px;
+  }
+  input[type="text"], input[type="date"] {
+    width: calc(33.33% - 20px);
+    padding: 10px;
+    margin: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffa500;
+    color: #fff;
+    cursor: pointer;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #fff;
+  }
+  th {
+    background-color: #222;
+  }
+  tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  tr:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
+  footer {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>ROADx - Car Route Finder</h1>
+  <h4>Have a safe and Happy Journey</h4>
+  <form id="routeForm">
+    <input type="text" id="startingPoint" name="startingPoint" placeholder="Starting Point" required>
+    <input type="text" id="destination" name="destination" placeholder="Destination" required>
+    <input type="date" id="dateOfJourney" name="dateOfJourney" required>
+    <input type="submit" value="Find Route">
+  </form>
+  <table id="routeTable">
+   
+    <tbody>
+      <!-- Route details will be added here dynamically using JavaScript -->
+    </tbody>
+  </table>
+</div>
+
+<footer>
+  <p>&copy; 2024 ROADx. All rights reserved.</p>
+</footer>
+
+<script>
+  document.getElementById('routeForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent form submission
+    var startingPoint = document.getElementById('startingPoint').value;
+    var destination = document.getElementById('destination').value;
+    var dateOfJourney = document.getElementById('dateOfJourney').value;
+
+    // Create a new table row with the date of journey
+    var newRow = "<tr><td>Have a Safe Journey!</td></tr>";
+    document.querySelector('#routeTable tbody').insertAdjacentHTML('beforeend', newRow);
+
+    // Clear the form fields after submission
+    document.getElementById('routeForm').reset();
+  });
+</script>
+
+</body>
+</html>
